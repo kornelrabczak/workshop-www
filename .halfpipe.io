@@ -4,4 +4,4 @@ tasks:
 - type: run
   script: ./scripts.sh
   docker:
-    image: alpine
+    image: ubuntu

@@ -22,7 +22,7 @@ jobs:
       image_resource:
         type: registry-image
         source:
-          repository: alpine
+          repository: ubuntu
           tag: latest
       params:
         ARTIFACTORY_PASSWORD: ((artifactory.password))
