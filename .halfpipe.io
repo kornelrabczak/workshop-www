@@ -8,4 +8,4 @@ tasks:
     - type: run
       script: ./scripts.sh
       docker:
-        image: ubuntu-nodejs
+        image: tbaltrushaitis/ubuntu-nodejs
