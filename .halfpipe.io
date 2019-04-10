@@ -8,4 +8,4 @@ tasks:
     - type: run
       script: ./scripts.sh
       docker:
-        image: node:10.15-stretch
+        image: browserless/chrome
