@@ -7,7 +7,22 @@ resources:
     branch: master
     private_key: ((github.private_key))
     uri: git@github.com:springernature/workshop-www.git
-resource_types: []
+- name: CF api.snpaas.eu workshop dev
+  type: cf-resource
+  source:
+    api: https://api.snpaas.eu
+    org: workshop
+    password: ((cloudfoundry.password))
+    space: dev
+    username: ((cloudfoundry.username))
+resource_types:
+- name: cf-resource
+  type: registry-image
+  source:
+    password: ((gcr.private_key))
+    repository: eu.gcr.io/halfpipe-io/cf-resource
+    tag: stable
+    username: _json_key
 jobs:
 - name: run scripts.sh
   serial: true
@@ -69,4 +84,42 @@ jobs:
       - path: ../../../halfpipe-cache
     timeout: 1h
     attempts: 1
+- name: deploy-cf
+  serial: true
+  plan:
+  - aggregate:
+    - get: git
+      passed:
+      - run scripts.sh
+      trigger: true
+    timeout: 1h
+  - put: cf halfpipe-push
+    resource: CF api.snpaas.eu workshop dev
+    params:
+      appPath: git
+      command: halfpipe-push
+      gitRefPath: git/.git/ref
+      manifestPath: git/manifest.yml
+      testDomain: springernature.app
+      timeout: 1h
+    timeout: 1h
+    attempts: 2
+  - put: cf halfpipe-promote
+    resource: CF api.snpaas.eu workshop dev
+    params:
+      command: halfpipe-promote
+      manifestPath: git/manifest.yml
+      testDomain: springernature.app
+      timeout: 1h
+    timeout: 1h
+    attempts: 2
+  ensure:
+    put: cf halfpipe-cleanup
+    resource: CF api.snpaas.eu workshop dev
+    params:
+      command: halfpipe-cleanup
+      manifestPath: git/manifest.yml
+      timeout: 1h
+    timeout: 1h
+    attempts: 2
 

@@ -1,3 +1,5 @@
 ---
 applications:
 - name: www
+  routes:
+    - route: www.springernature.app
