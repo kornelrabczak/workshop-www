@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/springernature/workshop-www/issues"
   },
-  "homepage": "https://github.com/springernature/workshop-www#readme"
+  "homepage": "https://github.com/springernature/workshop-www#readme",
+  "dependencies": {
+    "pa11y": "^5.1.0"
+  }
 }
