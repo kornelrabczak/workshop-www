@@ -8,4 +8,4 @@ tasks:
     - type: run
       script: ./scripts.sh
       docker:
-        image: browserless/chrome
+        image: ubuntu-nodejs
