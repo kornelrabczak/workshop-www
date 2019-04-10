@@ -2,4 +2,4 @@
 
 echo "TEST ECHO"
 npm install
-npx pa11y envvarhere
+npx pa11y $TEST_ROUTE
